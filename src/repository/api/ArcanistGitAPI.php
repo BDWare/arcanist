@@ -31,11 +31,15 @@ final class ArcanistGitAPI extends ArcanistRepositoryAPI {
     static $git = null;
     if ($git === null) {
       if (phutil_is_windows()) {
-        // NOTE: On Windows, phutil_passthru() uses 'bypass_shell' because
-        // everything goes to hell if we don't. We must provide an absolute
-        // path to Git for this to work properly.
-        $git = Filesystem::resolveBinary('git');
-        $git = csprintf('%s', $git);
+        if (substr(getenv('SHELL'), -4) === 'bash') {
+          $git = 'git';
+        } else {
+          // NOTE: On Windows, phutil_passthru() uses 'bypass_shell' because
+          // everything goes to hell if we don't. We must provide an absolute
+          // path to Git for this to work properly.
+          $git = Filesystem::resolveBinary('git');
+          $git = csprintf('%s', $git);
+        }
       } else {
         $git = 'git';
       }
