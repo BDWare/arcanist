@@ -76,15 +76,14 @@ EOTEXT
       }
 
       $branch_name = $repository->getBranchName();
-      if ($branch_name != 'master' && $branch_name != 'stable') {
+      if ($branch_name != 'wmf/stable') {
         throw new ArcanistUsageException(
           pht(
-            "%s must be on either branch '%s' or '%s' to be automatically ".
+            "%s must be on branch '%s' to be automatically ".
             "upgraded. ".
             "This copy of %s (in '%s') is on branch '%s'.",
             $lib,
-            'master',
-            'stable',
+            'wmf/stable',
             $lib,
             $root,
             $branch_name));
