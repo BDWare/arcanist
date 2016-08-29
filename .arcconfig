@@ -2,5 +2,6 @@
   "phabricator.uri": "https://phabricator.wikimedia.org/",
   "load": [
     "src/"
-  ]
+  ],
+  "history.immutable": false
 }
