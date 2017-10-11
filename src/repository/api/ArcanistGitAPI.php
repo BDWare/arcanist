@@ -501,6 +501,10 @@ final class ArcanistGitAPI extends ArcanistRepositoryAPI {
       return null;
     }
 
+    if (!strlen($branch)) {
+      return null;
+    }
+
     return $branch;
   }
 
@@ -513,7 +517,7 @@ final class ArcanistGitAPI extends ArcanistRepositoryAPI {
       // Verify this, and strip it.
       $ref = rtrim($stdout);
       $branch = $this->getBranchNameFromRef($ref);
-      if (!$branch) {
+      if ($branch === null) {
         throw new Exception(
           pht('Failed to parse %s output!', 'git symbolic-ref'));
       }
@@ -1019,7 +1023,7 @@ final class ArcanistGitAPI extends ArcanistRepositoryAPI {
       list($ref, $hash, $epoch, $tree, $desc, $text) = $fields;
 
       $branch = $this->getBranchNameFromRef($ref);
-      if ($branch) {
+      if ($branch !== null) {
         $result[] = array(
           'current' => ($branch === $current),
           'name' => $branch,
